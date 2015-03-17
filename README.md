@@ -1,15 +1,24 @@
 # Lifespan
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/lifespan`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Build Status](https://travis-ci.org/gendosu/lifespan.svg?branch=master)](https://travis-ci.org/gendosu/lifespan)
 
-TODO: Delete this and the text above, and describe your gem
+This +lifespan+ extension provides filtering of record at the start_at and end_at.<br/>
+Automatically adding to default_scope.<br/>
+without_lifespan method a good job.<br/>
+It is not erased only default_scope itself has added.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
+TODO: It is scheduled to be able to support rubygem install
+
 ```ruby
 gem 'lifespan'
+```
+or
+```ruby
+gem 'lifespan', github: 'gendosu/lifespan'
 ```
 
 And then execute:
@@ -22,13 +31,30 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```Ruby
+class Article < ActiveRecord::Base
+  lifespan start_at_column: "start_on"
+end
+```
+
+How to use:
+
+```shell
+Article.all
+=> SELECT
+    `articles`.*
+  FROM
+    `articles`
+  WHERE
+    (`articles`.`start_at` <= '2115-03-31 15:00:00.000072') AND
+    (`articles`.`end_at` > '2115-03-31 15:00:00.000072' OR `articles`.`end_at` IS NULL);
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+TODO
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
 
 ## Contributing
 
